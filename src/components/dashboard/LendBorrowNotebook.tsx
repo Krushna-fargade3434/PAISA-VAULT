@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, memo } from 'react';
-import { BookOpen, Plus, ArrowUpRight, ArrowDownLeft, Trash2, Check, X } from 'lucide-react';
+import { BookOpen, Plus, ArrowUpRight, ArrowDownLeft, Trash2, Check, X, MoreVertical, Pencil } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,6 +25,13 @@ import {
 import { toast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { useAuth } from '@/hooks/useAuth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface LendBorrowEntry {
   id: string;
@@ -64,7 +71,16 @@ const LendBorrowNotebook = () => {
     return [];
   });
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [form, setForm] = useState({
+    type: 'lend' as 'lend' | 'borrow',
+    personName: '',
+    amount: '',
+    note: '',
+    date: new Date().toISOString().split('T')[0],
+  });
+  const [editForm, setEditForm] = useState({
+    id: '' as string,
     type: 'lend' as 'lend' | 'borrow',
     personName: '',
     amount: '',
@@ -122,6 +138,41 @@ const LendBorrowNotebook = () => {
       title: form.type === 'lend' ? 'Money lent recorded!' : 'Borrowed money recorded!',
     });
   }, [form, user?.id]);
+
+  const openEdit = useCallback((entry: LendBorrowEntry) => {
+    setEditForm({
+      id: entry.id,
+      type: entry.type,
+      personName: entry.personName,
+      amount: String(entry.amount),
+      note: entry.note || '',
+      date: entry.date,
+    });
+    setEditDialogOpen(true);
+  }, []);
+
+  const handleUpdateEntry = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editForm.id || !editForm.personName || !editForm.amount) return;
+    setEntries(prev => {
+      const updated = prev.map((entry) =>
+        entry.id === editForm.id
+          ? {
+              ...entry,
+              type: editForm.type,
+              personName: editForm.personName,
+              amount: parseFloat(editForm.amount),
+              note: editForm.note,
+              date: editForm.date,
+            }
+          : entry
+      );
+      if (user?.id) setStoredEntries(user.id, updated);
+      return updated;
+    });
+    setEditDialogOpen(false);
+    toast({ title: 'Entry updated' });
+  }, [editForm, user?.id]);
 
   const toggleSettled = useCallback((id: string) => {
     setEntries(prev => {
@@ -282,11 +333,101 @@ const LendBorrowNotebook = () => {
               </form>
             </DialogContent>
           </Dialog>
+          {/* Edit Dialog */}
+          <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="font-display">Edit Entry</DialogTitle>
+                <DialogDescription>Update details for this entry.</DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleUpdateEntry} className="space-y-4 mt-4">
+                <div className="space-y-2">
+                  <Label>Type</Label>
+                  <Select
+                    value={editForm.type}
+                    onValueChange={(value: 'lend' | 'borrow') =>
+                      setEditForm({ ...editForm, type: value })
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="lend">
+                        <span className="flex items-center gap-2">
+                          <ArrowUpRight className="w-4 h-4 text-orange-500" />
+                          Money I Lent (Given)
+                        </span>
+                      </SelectItem>
+                      <SelectItem value="borrow">
+                        <span className="flex items-center gap-2">
+                          <ArrowDownLeft className="w-4 h-4 text-blue-500" />
+                          Money I Borrowed (Taken)
+                        </span>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-person-name">Person Name</Label>
+                  <Input
+                    id="edit-person-name"
+                    placeholder="Who did you lend/borrow from?"
+                    value={editForm.personName}
+                    onChange={(e) => setEditForm({ ...editForm, personName: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-entry-amount">Amount (₹)</Label>
+                  <Input
+                    id="edit-entry-amount"
+                    type="number"
+                    placeholder="0.00"
+                    step="0.01"
+                    min="0"
+                    value={editForm.amount}
+                    onChange={(e) => setEditForm({ ...editForm, amount: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-entry-date">Date</Label>
+                  <Input
+                    id="edit-entry-date"
+                    type="date"
+                    value={editForm.date}
+                    onChange={(e) => setEditForm({ ...editForm, date: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-entry-note">Note (optional)</Label>
+                  <Textarea
+                    id="edit-entry-note"
+                    placeholder="What was it for?"
+                    value={editForm.note}
+                    onChange={(e) => setEditForm({ ...editForm, note: e.target.value })}
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className={`w-full ${
+                    editForm.type === 'lend'
+                      ? 'bg-orange-500 hover:bg-orange-600'
+                      : 'bg-blue-500 hover:bg-blue-600'
+                  }`}
+                >
+                  Update Entry
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Summary */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3 sm:gap-2">
           <div className="bg-orange-500/10 rounded-lg p-3 text-center">
             <p className="text-xs text-muted-foreground">To Receive</p>
             <p className="text-lg font-bold text-orange-500">₹{totalLent.toFixed(2)}</p>
@@ -298,7 +439,7 @@ const LendBorrowNotebook = () => {
         </div>
 
         {/* Entries List */}
-        <ScrollArea className="h-[200px] pr-2">
+        <ScrollArea className="max-h-[55vh] sm:h-[200px] pr-2">
           {entries.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground py-8">
               <BookOpen className="w-8 h-8 mb-2 opacity-50" />
@@ -318,6 +459,7 @@ const LendBorrowNotebook = () => {
                       entry={entry}
                       onToggleSettled={toggleSettled}
                       onDelete={deleteEntry}
+                      onEdit={openEdit}
                     />
                   ))}
                 </>
@@ -333,6 +475,7 @@ const LendBorrowNotebook = () => {
                       entry={entry}
                       onToggleSettled={toggleSettled}
                       onDelete={deleteEntry}
+                      onEdit={openEdit}
                     />
                   ))}
                 </>
@@ -349,16 +492,17 @@ interface EntryItemProps {
   entry: LendBorrowEntry;
   onToggleSettled: (id: string) => void;
   onDelete: (id: string) => void;
+  onEdit: (entry: LendBorrowEntry) => void;
 }
 
-const EntryItem = memo(({ entry, onToggleSettled, onDelete }: EntryItemProps) => {
+const EntryItem = memo(({ entry, onToggleSettled, onDelete, onEdit }: EntryItemProps) => {
   return (
     <div
       className={`flex items-center justify-between p-2 rounded-lg border ${
         entry.settled ? 'bg-muted/30 opacity-60' : 'bg-card'
       }`}
     >
-      <div className="flex items-center gap-2 min-w-0 flex-1">
+      <div className="flex items-center gap-3 min-w-0 flex-1">
         <div
           className={`p-1.5 rounded-full ${
             entry.type === 'lend' ? 'bg-orange-500/20' : 'bg-blue-500/20'
@@ -395,8 +539,9 @@ const EntryItem = memo(({ entry, onToggleSettled, onDelete }: EntryItemProps) =>
         <Button
           size="icon"
           variant="ghost"
-          className="h-7 w-7"
+          className="h-9 w-9 sm:h-7 sm:w-7"
           onClick={() => onToggleSettled(entry.id)}
+          aria-label={entry.settled ? 'Mark as pending' : 'Mark as settled'}
         >
           {entry.settled ? (
             <X className="w-3.5 h-3.5" />
@@ -404,14 +549,25 @@ const EntryItem = memo(({ entry, onToggleSettled, onDelete }: EntryItemProps) =>
             <Check className="w-3.5 h-3.5 text-green-500" />
           )}
         </Button>
-        <Button
-          size="icon"
-          variant="ghost"
-          className="h-7 w-7 text-destructive hover:text-destructive"
-          onClick={() => onDelete(entry.id)}
-        >
-          <Trash2 className="w-3.5 h-3.5" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="icon" variant="ghost" className="h-9 w-9 sm:h-7 sm:w-7" aria-label="More actions">
+              <MoreVertical className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => onEdit(entry)}>
+              <Pencil className="w-4 h-4 mr-2" /> Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onToggleSettled(entry.id)}>
+              {entry.settled ? 'Mark as Pending' : 'Mark as Settled'}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-destructive" onClick={() => onDelete(entry.id)}>
+              <Trash2 className="w-4 h-4 mr-2" /> Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
