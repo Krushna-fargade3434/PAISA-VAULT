@@ -92,7 +92,23 @@ const LendBorrowNotebook = () => {
   useEffect(() => {
     if (user?.id) {
       const stored = getStoredEntries(user.id);
-      setEntries(stored);
+      // Migrate old entries without valid dates
+      const migratedEntries = stored.map(entry => {
+        if (!entry.date || entry.date === '' || isNaN(new Date(entry.date).getTime())) {
+          return {
+            ...entry,
+            date: new Date().toISOString().split('T')[0]
+          };
+        }
+        return entry;
+      });
+      
+      // Save migrated entries if any changes were made
+      if (JSON.stringify(stored) !== JSON.stringify(migratedEntries)) {
+        setStoredEntries(user.id, migratedEntries);
+      }
+      
+      setEntries(migratedEntries);
     }
   }, [user?.id]);
 
@@ -498,13 +514,13 @@ interface EntryItemProps {
 const EntryItem = memo(({ entry, onToggleSettled, onDelete, onEdit }: EntryItemProps) => {
   return (
     <div
-      className={`flex items-center justify-between p-2 rounded-lg border ${
+      className={`flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-2 rounded-lg border gap-2 sm:gap-0 ${
         entry.settled ? 'bg-muted/30 opacity-60' : 'bg-card'
       }`}
     >
-      <div className="flex items-center gap-3 min-w-0 flex-1">
+      <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
         <div
-          className={`p-1.5 rounded-full ${
+          className={`p-1.5 rounded-full flex-shrink-0 ${
             entry.type === 'lend' ? 'bg-orange-500/20' : 'bg-blue-500/20'
           }`}
         >
@@ -515,59 +531,62 @@ const EntryItem = memo(({ entry, onToggleSettled, onDelete, onEdit }: EntryItemP
           )}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <p className="text-sm font-medium truncate">{entry.personName}</p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="text-sm font-medium">{entry.personName}</p>
             {entry.settled && (
               <Badge variant="outline" className="text-[10px] px-1 py-0">
                 Settled
               </Badge>
             )}
           </div>
-          <p className="text-xs text-muted-foreground truncate">
-            {entry.note || format(new Date(entry.date), 'MMM d, yyyy')}
+          <p className="text-xs text-muted-foreground mt-0.5">
+            {entry.date && new Date(entry.date).getTime() ? format(new Date(entry.date), 'MMM d, yyyy') : 'Jan 19, 2026'}
+            {entry.note && ` • ${entry.note}`}
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-1 ml-2">
+      <div className="flex items-center justify-between sm:justify-end gap-1 sm:ml-2">
         <span
-          className={`text-sm font-semibold whitespace-nowrap ${
+          className={`text-base sm:text-sm font-semibold whitespace-nowrap ${
             entry.type === 'lend' ? 'text-orange-500' : 'text-blue-500'
           }`}
         >
           ₹{entry.amount.toFixed(0)}
         </span>
-        <Button
-          size="icon"
-          variant="ghost"
-          className="h-9 w-9 sm:h-7 sm:w-7"
-          onClick={() => onToggleSettled(entry.id)}
-          aria-label={entry.settled ? 'Mark as pending' : 'Mark as settled'}
-        >
-          {entry.settled ? (
-            <X className="w-3.5 h-3.5" />
-          ) : (
-            <Check className="w-3.5 h-3.5 text-green-500" />
-          )}
-        </Button>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="ghost" className="h-9 w-9 sm:h-7 sm:w-7" aria-label="More actions">
-              <MoreVertical className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => onEdit(entry)}>
-              <Pencil className="w-4 h-4 mr-2" /> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => onToggleSettled(entry.id)}>
-              {entry.settled ? 'Mark as Pending' : 'Mark as Settled'}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive" onClick={() => onDelete(entry.id)}>
-              <Trash2 className="w-4 h-4 mr-2" /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-0.5">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 sm:h-7 sm:w-7"
+            onClick={() => onToggleSettled(entry.id)}
+            aria-label={entry.settled ? 'Mark as pending' : 'Mark as settled'}
+          >
+            {entry.settled ? (
+              <X className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+            ) : (
+              <Check className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-green-500" />
+            )}
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="icon" variant="ghost" className="h-8 w-8 sm:h-7 sm:w-7" aria-label="More actions">
+                <MoreVertical className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => onEdit(entry)}>
+                <Pencil className="w-4 h-4 mr-2" /> Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onToggleSettled(entry.id)}>
+                {entry.settled ? 'Mark as Pending' : 'Mark as Settled'}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-destructive" onClick={() => onDelete(entry.id)}>
+                <Trash2 className="w-4 h-4 mr-2" /> Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </div>
   );
