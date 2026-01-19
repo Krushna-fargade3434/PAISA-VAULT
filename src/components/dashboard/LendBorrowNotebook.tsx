@@ -455,7 +455,7 @@ const LendBorrowNotebook = () => {
         </div>
 
         {/* Entries List */}
-        <ScrollArea className="h-[300px] sm:h-[280px] pr-2">
+        <ScrollArea className="min-h-[300px] h-[300px] overflow-y-auto pr-2">
           {entries.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground py-8">
               <BookOpen className="w-8 h-8 mb-2 opacity-50" />
