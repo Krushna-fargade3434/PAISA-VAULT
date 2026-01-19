@@ -455,7 +455,7 @@ const LendBorrowNotebook = () => {
         </div>
 
         {/* Entries List */}
-        <ScrollArea className="max-h-[55vh] sm:h-[200px] pr-2">
+        <ScrollArea className="h-[300px] sm:h-[280px] pr-2">
           {entries.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground py-8">
               <BookOpen className="w-8 h-8 mb-2 opacity-50" />
@@ -463,7 +463,7 @@ const LendBorrowNotebook = () => {
               <p className="text-xs">Track money you lend or borrow</p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2 pb-2">
               {pendingEntries.length > 0 && (
                 <>
                   <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
