@@ -68,9 +68,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error('Error signing out:', error);
-        throw error;
       }
-      // Clear user state immediately
+    } catch (error) {
+      console.error('Sign out error:', error);
+    } finally {
+      // Clear user state immediately regardless of server response
       setUser(null);
       setSession(null);
       // Clear localStorage for lend/borrow entries
@@ -80,9 +82,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           localStorage.removeItem(key);
         }
       });
-    } catch (error) {
-      console.error('Sign out error:', error);
-      throw error;
     }
   };
 
