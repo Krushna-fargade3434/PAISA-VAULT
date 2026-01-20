@@ -115,6 +115,13 @@ const Auth = () => {
           } else {
             setErrors({ form: error.message });
           }
+        } else {
+          // Successfully signed in - navigate will happen via useEffect
+          toast({
+            title: 'Welcome back!',
+            description: 'You have been signed in successfully.',
+          });
+          navigate('/dashboard');
         }
       } else {
         const { error } = await signUp(email, password, displayName);
@@ -124,6 +131,17 @@ const Auth = () => {
           } else {
             setErrors({ form: error.message });
           }
+        } else {
+          // Successfully signed up
+          toast({
+            title: 'Account created!',
+            description: 'Please check your email to verify your account, or sign in now.',
+          });
+          // Switch to login mode
+          setMode('login');
+          setEmail(email);
+          setPassword('');
+          setDisplayName('');
         }
       }
     } finally {

@@ -1,7 +1,9 @@
 import { LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InstallPrompt } from '@/components/pwa/InstallPrompt';
 import defaultAvatar from '@/assets/default-image.png';
 import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 
 const paisaVaultLogo = '/paisa-vault-logo.png';
 
@@ -17,7 +19,25 @@ import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const displayName = user?.user_metadata?.display_name || user?.email?.split('@')[0] || 'User';
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: 'Signed out successfully',
+        description: 'You have been logged out.',
+      });
+      navigate('/');
+    } catch (error) {
+      toast({
+        title: 'Error signing out',
+        description: error instanceof Error ? error.message : 'An error occurred',
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -58,7 +78,7 @@ const Header = () => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut} className="text-destructive">
+            <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
             </DropdownMenuItem>

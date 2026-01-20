@@ -64,7 +64,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Error signing out:', error);
+        throw error;
+      }
+      // Clear user state immediately
+      setUser(null);
+      setSession(null);
+      // Clear localStorage for lend/borrow entries
+      const keys = Object.keys(localStorage);
+      keys.forEach(key => {
+        if (key.startsWith('paisa-vault-lend-borrow-')) {
+          localStorage.removeItem(key);
+        }
+      });
+    } catch (error) {
+      console.error('Sign out error:', error);
+      throw error;
+    }
   };
 
   const resetPassword = async (email: string) => {

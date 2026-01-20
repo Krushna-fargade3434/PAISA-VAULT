@@ -49,10 +49,13 @@ const QuickActions = () => {
 
   const handleAddIncome = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!incomeForm.amount) return;
+    const amount = parseFloat(incomeForm.amount);
+    if (!incomeForm.amount || isNaN(amount) || amount <= 0) {
+      return;
+    }
     
     addIncome({
-      amount: parseFloat(incomeForm.amount),
+      amount,
       description: incomeForm.description,
       source: incomeForm.source,
       date: incomeForm.date,
@@ -69,10 +72,13 @@ const QuickActions = () => {
 
   const handleAddExpense = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!expenseForm.amount) return;
+    const amount = parseFloat(expenseForm.amount);
+    if (!expenseForm.amount || isNaN(amount) || amount <= 0) {
+      return;
+    }
     
     addExpense({
-      amount: parseFloat(expenseForm.amount),
+      amount,
       category: expenseForm.category,
       description: expenseForm.description,
       date: expenseForm.date,

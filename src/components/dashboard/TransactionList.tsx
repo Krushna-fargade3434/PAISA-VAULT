@@ -4,6 +4,7 @@ import { ArrowDownCircle, ArrowUpCircle, Trash2, Pencil } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -44,6 +45,7 @@ const TransactionList = () => {
     setEditAmount(String(expense.amount));
     setEditDescription(expense.description || '');
     setEditDate(expense.date);
+    setEditCategory(expense.category);
   };
 
   const openIncomeEdit = (income: Income) => {
@@ -56,9 +58,14 @@ const TransactionList = () => {
 
   const handleExpenseUpdate = () => {
     if (editingExpense && editAmount) {
+      const amount = parseFloat(editAmount);
+      if (isNaN(amount) || amount <= 0) {
+        return;
+      }
       updateExpense({
         id: editingExpense.id,
-        amount: parseFloat(editAmount),
+        amount,
+        category: editCategory,
         description: editDescription,
         date: editDate,
       });
@@ -68,9 +75,13 @@ const TransactionList = () => {
 
   const handleIncomeUpdate = () => {
     if (editingIncome && editAmount) {
+      const amount = parseFloat(editAmount);
+      if (isNaN(amount) || amount <= 0) {
+        return;
+      }
       updateIncome({
         id: editingIncome.id,
-        amount: parseFloat(editAmount),
+        amount,
         description: editDescription,
         source: editSource,
         date: editDate,
@@ -205,37 +216,56 @@ const TransactionList = () => {
             <DialogTitle>Edit Expense</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 pt-4">
-            <Input
-              type="number"
-              placeholder="Amount"
-              value={editAmount}
-              onChange={(e) => setEditAmount(e.target.value)}
-            />
-            <Select
-              value={editCategory}
-              onValueChange={(value: ExpenseCategory) => setEditCategory(value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Food">Food</SelectItem>
-                <SelectItem value="Travel">Travel</SelectItem>
-                <SelectItem value="Study">Study</SelectItem>
-                <SelectItem value="Personal">Personal</SelectItem>
-                <SelectItem value="Other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-            <Input
-              type="date"
-              value={editDate}
-              onChange={(e) => setEditDate(e.target.value)}
-            />
-            <Input
-              placeholder="Description (optional)"
-              value={editDescription}
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
+            <div className="space-y-2">
+              <Label htmlFor="edit-expense-amount">Amount (₹)</Label>
+              <Input
+                id="edit-expense-amount"
+                type="number"
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+                value={editAmount}
+                onChange={(e) => setEditAmount(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-expense-category">Category</Label>
+              <Select
+                value={editCategory}
+                onValueChange={(value: ExpenseCategory) => setEditCategory(value)}
+              >
+                <SelectTrigger id="edit-expense-category">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Food">Food</SelectItem>
+                  <SelectItem value="Travel">Travel</SelectItem>
+                  <SelectItem value="Study">Study</SelectItem>
+                  <SelectItem value="Personal">Personal</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-expense-date">Date</Label>
+              <Input
+                id="edit-expense-date"
+                type="date"
+                value={editDate}
+                onChange={(e) => setEditDate(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-expense-description">Description (optional)</Label>
+              <Input
+                id="edit-expense-description"
+                placeholder="What did you spend on?"
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+              />
+            </div>
             <Button className="w-full" onClick={handleExpenseUpdate}>
               Update Expense
             </Button>
@@ -250,27 +280,48 @@ const TransactionList = () => {
             <DialogTitle>Edit Income</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 pt-4">
-            <Input
-              type="number"
-              placeholder="Amount"
-              value={editAmount}
-              onChange={(e) => setEditAmount(e.target.value)}
-            />
-            <Input
-              type="date"
-              value={editDate}
-              onChange={(e) => setEditDate(e.target.value)}
-            />
-            <Input
-              placeholder="Source"
-              value={editSource}
-              onChange={(e) => setEditSource(e.target.value)}
-            />
-            <Input
-              placeholder="Description (optional)"
-              value={editDescription}
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
+            <div className="space-y-2">
+              <Label htmlFor="edit-income-amount">Amount (₹)</Label>
+              <Input
+                id="edit-income-amount"
+                type="number"
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+                value={editAmount}
+                onChange={(e) => setEditAmount(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-income-date">Date</Label>
+              <Input
+                id="edit-income-date"
+                type="date"
+                value={editDate}
+                onChange={(e) => setEditDate(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-income-source">Source</Label>
+              <Input
+                id="edit-income-source"
+                placeholder="e.g., Parents, Part-time Job"
+                value={editSource}
+                onChange={(e) => setEditSource(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-income-description">Description (optional)</Label>
+              <Input
+                id="edit-income-description"
+                placeholder="Add a note..."
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+              />
+            </div>
             <Button className="w-full" onClick={handleIncomeUpdate}>
               Update Income
             </Button>

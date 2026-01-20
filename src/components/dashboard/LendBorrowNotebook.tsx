@@ -122,14 +122,22 @@ const LendBorrowNotebook = () => {
 
   const handleAddEntry = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.personName || !form.amount) return;
+    const amount = parseFloat(form.amount);
+    if (!form.personName || !form.amount || isNaN(amount) || amount <= 0) {
+      toast({
+        title: 'Invalid entry',
+        description: 'Please enter a valid person name and amount greater than 0.',
+        variant: 'destructive',
+      });
+      return;
+    }
 
     const newEntry: LendBorrowEntry = {
       id: crypto.randomUUID(),
       type: form.type,
-      personName: form.personName,
-      amount: parseFloat(form.amount),
-      note: form.note,
+      personName: form.personName.trim(),
+      amount,
+      note: form.note.trim(),
       date: form.date,
       settled: false,
     };
@@ -169,16 +177,24 @@ const LendBorrowNotebook = () => {
 
   const handleUpdateEntry = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    if (!editForm.id || !editForm.personName || !editForm.amount) return;
+    const amount = parseFloat(editForm.amount);
+    if (!editForm.id || !editForm.personName || !editForm.amount || isNaN(amount) || amount <= 0) {
+      toast({
+        title: 'Invalid entry',
+        description: 'Please enter a valid person name and amount greater than 0.',
+        variant: 'destructive',
+      });
+      return;
+    }
     setEntries(prev => {
       const updated = prev.map((entry) =>
         entry.id === editForm.id
           ? {
               ...entry,
               type: editForm.type,
-              personName: editForm.personName,
-              amount: parseFloat(editForm.amount),
-              note: editForm.note,
+              personName: editForm.personName.trim(),
+              amount,
+              note: editForm.note.trim(),
               date: editForm.date,
             }
           : entry
