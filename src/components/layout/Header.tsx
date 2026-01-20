@@ -10,9 +10,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const displayName = user?.user_metadata?.display_name || user?.email?.split('@')[0] || 'User';
 
   return (
@@ -52,7 +54,13 @@ const Header = () => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut} className="text-destructive">
+            <DropdownMenuItem
+              onClick={async () => {
+                await signOut();
+                navigate('/auth');
+              }}
+              className="text-destructive"
+            >
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
             </DropdownMenuItem>
