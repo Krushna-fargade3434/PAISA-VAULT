@@ -165,7 +165,7 @@ const Auth = () => {
       <Card className="w-full max-w-md animate-scale-in card-shadow relative">
         <CardHeader className="text-center space-y-3 sm:space-y-4 px-4 sm:px-6">
           <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-            <img src={paisaVaultLogo} alt="Paisa Vault" className="w-full h-full object-contain" />
+            <img src="/paisa-vault-logo.png" alt="Paisa Vault" className="w-full h-full object-contain" />
           </div>
           <div>
             <CardTitle className="text-xl sm:text-2xl font-display">

@@ -1,5 +1,4 @@
 import { LogOut } from 'lucide-react';
-import paisaVaultLogo from '@/assets/paisa-vault-logo.png';
 import defaultAvatar from '@/assets/default-image.png';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,7 +20,7 @@ const Header = () => {
       <div className="container flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0">
-            <img src={paisaVaultLogo} alt="Paisa Vault" className="w-full h-full object-contain" />
+            <img src="/paisa-vault-logo.png" alt="Paisa Vault" className="w-full h-full object-contain" />
           </div>
           <div className="min-w-0">
             <h1 className="font-display font-bold text-base sm:text-lg leading-tight">Paisa Vault</h1>
