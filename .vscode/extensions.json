@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "vitest.explorer",
+    "github.copilot",
+    "usernamehw.errorlens",
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.vscode-typescript-next"
+  ]
+}
