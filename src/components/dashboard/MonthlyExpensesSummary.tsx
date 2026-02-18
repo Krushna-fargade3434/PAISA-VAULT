@@ -57,11 +57,13 @@ const MonthlyExpensesSummary = ({ expenseData }: MonthlyExpensesSummaryProps) =>
 
   if (monthlyData.length === 0) {
     return (
-      <Card className="card-shadow">
+      <Card className="card-shadow border-2 border-border bg-gradient-to-br from-background to-muted/20">
         <CardHeader className="px-4 sm:px-6">
           <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-            <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-            Monthly Expense Records
+            <div className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors">
+              <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+            </div>
+            <span className="bg-gradient-to-r from-primary to-violet-600 bg-clip-text text-transparent">Monthly Expense Records</span>
           </CardTitle>
           <CardDescription className="text-xs sm:text-sm">Your expense breakdown by month</CardDescription>
         </CardHeader>
@@ -77,11 +79,13 @@ const MonthlyExpensesSummary = ({ expenseData }: MonthlyExpensesSummaryProps) =>
   }
 
   return (
-    <Card className="card-shadow">
+    <Card className="card-shadow border-2 hover:border-primary/20 transition-all duration-300 bg-gradient-to-br from-background to-muted/20">
       <CardHeader className="px-4 sm:px-6">
         <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-          <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-          Monthly Expense Records
+          <div className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors">
+            <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+          </div>
+          <span className="bg-gradient-to-r from-primary to-violet-600 bg-clip-text text-transparent">Monthly Expense Records</span>
         </CardTitle>
         <CardDescription className="text-xs sm:text-sm">Your expense breakdown by month</CardDescription>
       </CardHeader>
@@ -90,7 +94,7 @@ const MonthlyExpensesSummary = ({ expenseData }: MonthlyExpensesSummaryProps) =>
           {monthlyData.map((monthData) => (
             <div
               key={`${monthData.year}-${monthData.month}`}
-              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-lg border border-border hover:border-primary/50 transition-all hover:shadow-md bg-gradient-to-br from-card to-card/80"
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl border-2 border-border hover:border-primary/50 transition-all hover:shadow-lg hover:-translate-y-1 bg-gradient-to-br from-card to-card/80"
             >
               <div className="flex-1 space-y-1.5">
                 <div className="flex items-baseline gap-2">

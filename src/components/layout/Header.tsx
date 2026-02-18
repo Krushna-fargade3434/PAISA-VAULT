@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { APP_VERSION } from '@/lib/version';
 
-const rupeeSetuLogo = '/Rupee-setu-logo.png';
+const rupeeSetuLogo = '/Paytrax-logo.jpeg';
 
 import {
   DropdownMenu,
@@ -47,10 +47,10 @@ const Header = () => {
       <div className="container flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 bg-white shadow-md">
-            <img src={rupeeSetuLogo} alt="Rupee-Setu" className="w-full h-full object-cover" />
+            <img src={rupeeSetuLogo} alt="Paytrax" className="w-full h-full object-cover" />
           </div>
           <div className="min-w-0">
-            <h1 className="font-display font-bold text-base sm:text-lg leading-tight">Rupee-Setu</h1>
+            <h1 className="font-display font-bold text-base sm:text-lg leading-tight">Paytrax</h1>
             <p className="text-xs text-muted-foreground hidden xs:block">Your Money, Your Control</p>
           </div>
         </div>

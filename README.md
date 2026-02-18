@@ -1,13 +1,13 @@
-# Rupee-Setu
+# Paytrax
 
 **Your Money, Your Control** - A modern, secure personal finance tracker for students
 
-[![CI/CD](https://github.com/your-username/RUPEE-SETU/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/your-username/RUPEE-SETU/actions)
+[![CI/CD](https://github.com/your-username/paytrax/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/your-username/paytrax/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## About
 
-Rupee-Setu is a production-ready web-based expense and income tracking application designed specifically for students. Built with modern web technologies, it provides a secure, fast, and intuitive interface to manage your finances with confidence.
+Paytrax is a production-ready web-based expense and income tracking application designed specifically for students. Built with modern web technologies, it provides a secure, fast, and intuitive interface to manage your finances with confidence.
 
 ## ✨ Features
 
@@ -45,8 +45,8 @@ Rupee-Setu is a production-ready web-based expense and income tracking applicati
 
 1. **Clone and install**
    ```bash
-   git clone https://github.com/your-username/RUPEE-SETU.git
-   cd RUPEE-SETU
+   git clone https://github.com/your-username/paytrax.git
+   cd paytrax
    npm install
    ```
 
@@ -82,7 +82,7 @@ Rupee-Setu is a production-ready web-based expense and income tracking applicati
 ## 📁 Project Structure
 
 ```
-RUPEE-SETU/
+paytrax/
 ├── .github/
 │   └── workflows/        # CI/CD pipelines
 ├── src/

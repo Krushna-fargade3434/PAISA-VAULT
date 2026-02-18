@@ -48,43 +48,52 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       <Header />
       
       <main className="container py-4 sm:py-8 space-y-6 sm:space-y-8 px-3 sm:px-4">
-        {/* Greeting */}
-        <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+        {/* Greeting Section with Fade-in Animation */}
+        <div className="mb-6 animate-slide-up">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground bg-gradient-to-r from-primary to-emerald-600 bg-clip-text text-transparent">
             {getGreeting()}, {user?.user_metadata?.display_name || 'User'}
           </h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-2">Here's your financial overview</p>
         </div>
 
-        {/* Quick Actions */}
-        <div className="w-full">
+        {/* Quick Actions with Smooth Entry */}
+        <div className="w-full animate-fade-in" style={{animationDelay: '0.1s'}}>
           <QuickActions />
         </div>
 
-        {/* Expense Stats */}
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-          <StatCard
-            title="Total Expenses"
-            value={`₹${totalExpenses.toFixed(2)}`}
-            icon={<ArrowUpCircle className="w-5 h-5 text-expense-foreground" />}
-            variant="expense"
-          />
-          <StatCard
-            title="This Month Expenses"
-            value={`₹${thisMonthExpenses.toFixed(2)}`}
-            icon={<TrendingUp className="w-5 h-5 text-primary" />}
-            trend={format(new Date(), 'MMMM yyyy')}
-          />
+        {/* Expense Stats with Staggered Animation */}
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
+          <div className="animate-scale-in" style={{animationDelay: '0.2s'}}>
+            <StatCard
+              title="Total Expenses"
+              value={`₹${totalExpenses.toFixed(2)}`}
+              icon={<ArrowUpCircle className="w-5 h-5 text-expense-foreground" />}
+              variant="expense"
+            />
+          </div>
+          <div className="animate-scale-in" style={{animationDelay: '0.3s'}}>
+            <StatCard
+              title="This Month Expenses"
+              value={`₹${thisMonthExpenses.toFixed(2)}`}
+              icon={<TrendingUp className="w-5 h-5 text-primary" />}
+              trend={format(new Date(), 'MMMM yyyy')}
+            />
+          </div>
         </div>
 
         {/* Lend & Borrow Notebook */}
-        <LendBorrowNotebook />
+        <div className="animate-slide-up" style={{animationDelay: '0.4s'}}>
+          <LendBorrowNotebook />
+        </div>
 
         {/* Transaction List */}
-        <TransactionList />
+        <div className="animate-slide-up" style={{animationDelay: '0.5s'}}>
+          <TransactionList />
+        </div>
       </main>
     </div>
   );

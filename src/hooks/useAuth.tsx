@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Clear localStorage for lend/borrow entries
       const keys = Object.keys(localStorage);
       keys.forEach(key => {
-        if (key.startsWith('rupee-setu-lend-borrow-')) {
+        if (key.startsWith('paytrax-lend-borrow-')) {
           localStorage.removeItem(key);
         }
       });

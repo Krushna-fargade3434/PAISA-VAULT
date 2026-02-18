@@ -9,7 +9,7 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 const versionContent = `// Auto-generated build info - updated on each deployment
 export const APP_VERSION = '${packageJson.version}';
 export const BUILD_DATE = '${new Date().toISOString()}';
-export const APP_NAME = 'RUPEE SETU';
+export const APP_NAME = 'PAYTRAX';
 
 export const getVersionInfo = () => {
   return {

@@ -94,13 +94,13 @@ const TransactionList = () => {
     <>
       <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2">
         {/* Expenses Section */}
-        <Card className="card-shadow">
+        <Card className="card-shadow border-2 hover:border-expense/20 transition-all duration-300 bg-gradient-to-b from-background to-expense/5">
           <CardHeader className="pb-3 sm:pb-4">
             <CardTitle className="font-display text-base sm:text-lg flex items-center gap-2">
-              <div className="p-1.5 sm:p-2 rounded-lg bg-expense/10 flex-shrink-0">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-expense/10 flex-shrink-0 hover:bg-expense/20 transition-colors">
                 <ArrowUpCircle className="w-4 h-4 sm:w-5 sm:h-5 text-expense" />
               </div>
-              <span className="truncate">Expenses</span>
+              <span className="truncate bg-gradient-to-r from-expense to-rose-600 bg-clip-text text-transparent">Expenses</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
@@ -113,10 +113,10 @@ const TransactionList = () => {
                 sortedExpenses.map((expense) => (
                   <div
                     key={expense.id}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors animate-fade-in"
+                    className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 hover:bg-muted hover:shadow-md hover:scale-[1.02] transition-all duration-200 animate-fade-in border border-transparent hover:border-expense/20"
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-expense">
+                      <p className="font-semibold text-expense">
                         ₹{Number(expense.amount).toFixed(2)}
                       </p>
                       <p className="text-sm text-muted-foreground">
@@ -131,7 +131,7 @@ const TransactionList = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-primary shrink-0"
+                      className="text-muted-foreground hover:text-primary hover:bg-primary/10 shrink-0 transition-all"
                       onClick={() => openExpenseEdit(expense)}
                     >
                       <Pencil className="w-4 h-4" />
@@ -139,7 +139,7 @@ const TransactionList = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-destructive shrink-0"
+                      className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 shrink-0 transition-all"
                       onClick={() => deleteExpense(expense.id)}
                     >
                       <Trash2 className="w-4 h-4" />
@@ -152,13 +152,13 @@ const TransactionList = () => {
         </Card>
 
         {/* Income Section */}
-        <Card className="card-shadow">
+        <Card className="card-shadow border-2 hover:border-income/20 transition-all duration-300 bg-gradient-to-b from-background to-income/5">
           <CardHeader className="pb-3 sm:pb-4">
             <CardTitle className="font-display text-base sm:text-lg flex items-center gap-2">
-              <div className="p-1.5 sm:p-2 rounded-lg bg-income/10 flex-shrink-0">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-income/10 flex-shrink-0 hover:bg-income/20 transition-colors">
                 <ArrowDownCircle className="w-4 h-4 sm:w-5 sm:h-5 text-income" />
               </div>
-              <span className="truncate">Income</span>
+              <span className="truncate bg-gradient-to-r from-income to-emerald-600 bg-clip-text text-transparent">Income</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="px-3 sm:px-6">
@@ -171,10 +171,10 @@ const TransactionList = () => {
                 sortedIncome.map((income) => (
                   <div
                     key={income.id}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors animate-fade-in"
+                    className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 hover:bg-muted hover:shadow-md hover:scale-[1.02] transition-all duration-200 animate-fade-in border border-transparent hover:border-income/20"
                   >
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-income">
+                      <p className="font-semibold text-income">
                         ₹{Number(income.amount).toFixed(2)}
                       </p>
                       <p className="text-sm text-muted-foreground">
@@ -188,7 +188,7 @@ const TransactionList = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-primary shrink-0"
+                      className="text-muted-foreground hover:text-primary hover:bg-primary/10 shrink-0 transition-all"
                       onClick={() => openIncomeEdit(income)}
                     >
                       <Pencil className="w-4 h-4" />
@@ -196,7 +196,7 @@ const TransactionList = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-muted-foreground hover:text-destructive shrink-0"
+                      className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 shrink-0 transition-all"
                       onClick={() => deleteIncome(income.id)}
                     >
                       <Trash2 className="w-4 h-4" />
@@ -211,13 +211,13 @@ const TransactionList = () => {
 
       {/* Edit Expense Dialog */}
       <Dialog open={!!editingExpense} onOpenChange={() => setEditingExpense(null)}>
-        <DialogContent>
+        <DialogContent className="border-2 border-expense/20 bg-gradient-to-b from-background to-expense/5">
           <DialogHeader>
-            <DialogTitle>Edit Expense</DialogTitle>
+            <DialogTitle className="bg-gradient-to-r from-expense to-rose-600 bg-clip-text text-transparent">Edit Expense</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="edit-expense-amount">Amount (₹)</Label>
+              <Label htmlFor="edit-expense-amount" className="font-medium">Amount (₹)</Label>
               <Input
                 id="edit-expense-amount"
                 type="number"
@@ -226,16 +226,17 @@ const TransactionList = () => {
                 min="0"
                 value={editAmount}
                 onChange={(e) => setEditAmount(e.target.value)}
+                className="border-2 focus:border-expense/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-expense-category">Category</Label>
+              <Label htmlFor="edit-expense-category" className="font-medium">Category</Label>
               <Select
                 value={editCategory}
                 onValueChange={(value: ExpenseCategory) => setEditCategory(value)}
               >
-                <SelectTrigger id="edit-expense-category">
+                <SelectTrigger id="edit-expense-category" className="border-2 focus:border-expense/50 transition-all">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -248,25 +249,27 @@ const TransactionList = () => {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-expense-date">Date</Label>
+              <Label htmlFor="edit-expense-date" className="font-medium">Date</Label>
               <Input
                 id="edit-expense-date"
                 type="date"
                 value={editDate}
                 onChange={(e) => setEditDate(e.target.value)}
+                className="border-2 focus:border-expense/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-expense-description">Description (optional)</Label>
+              <Label htmlFor="edit-expense-description" className="font-medium">Description (optional)</Label>
               <Input
                 id="edit-expense-description"
                 placeholder="What did you spend on?"
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
+                className="border-2 focus:border-expense/50 transition-all"
               />
             </div>
-            <Button className="w-full" onClick={handleExpenseUpdate}>
+            <Button className="w-full gradient-expense hover:opacity-90 hover:scale-105 transition-all" onClick={handleExpenseUpdate}>
               Update Expense
             </Button>
           </div>
@@ -275,13 +278,13 @@ const TransactionList = () => {
 
       {/* Edit Income Dialog */}
       <Dialog open={!!editingIncome} onOpenChange={() => setEditingIncome(null)}>
-        <DialogContent>
+        <DialogContent className="border-2 border-income/20 bg-gradient-to-b from-background to-income/5">
           <DialogHeader>
-            <DialogTitle>Edit Income</DialogTitle>
+            <DialogTitle className="bg-gradient-to-r from-income to-emerald-600 bg-clip-text text-transparent">Edit Income</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="edit-income-amount">Amount (₹)</Label>
+              <Label htmlFor="edit-income-amount" className="font-medium">Amount (₹)</Label>
               <Input
                 id="edit-income-amount"
                 type="number"
@@ -290,39 +293,43 @@ const TransactionList = () => {
                 min="0"
                 value={editAmount}
                 onChange={(e) => setEditAmount(e.target.value)}
+                className="border-2 focus:border-income/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-income-date">Date</Label>
+              <Label htmlFor="edit-income-date" className="font-medium">Date</Label>
               <Input
                 id="edit-income-date"
                 type="date"
                 value={editDate}
                 onChange={(e) => setEditDate(e.target.value)}
+                className="border-2 focus:border-income/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-income-source">Source</Label>
+              <Label htmlFor="edit-income-source" className="font-medium">Source</Label>
               <Input
                 id="edit-income-source"
                 placeholder="e.g., Parents, Part-time Job"
                 value={editSource}
                 onChange={(e) => setEditSource(e.target.value)}
+                className="border-2 focus:border-income/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-income-description">Description (optional)</Label>
+              <Label htmlFor="edit-income-description" className="font-medium">Description (optional)</Label>
               <Input
                 id="edit-income-description"
                 placeholder="Add a note..."
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
+                className="border-2 focus:border-income/50 transition-all"
               />
             </div>
-            <Button className="w-full" onClick={handleIncomeUpdate}>
+            <Button className="w-full gradient-income hover:opacity-90 hover:scale-105 transition-all" onClick={handleIncomeUpdate}>
               Update Income
             </Button>
           </div>

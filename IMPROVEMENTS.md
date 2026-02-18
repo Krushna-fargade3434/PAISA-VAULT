@@ -1,4 +1,4 @@
-# Rupee-Setu Improvements Summary
+# Paytrax Improvements Summary
 
 ## ✅ Completed Improvements (v1.3.0)
 

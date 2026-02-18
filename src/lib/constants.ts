@@ -3,7 +3,7 @@
  */
 
 // App metadata
-export const APP_NAME = 'Rupee-Setu';
+export const APP_NAME = 'Paytrax';
 export const APP_DESCRIPTION = 'Your Money, Your Control';
 
 // Date formats

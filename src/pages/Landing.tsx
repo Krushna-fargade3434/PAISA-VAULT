@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Shield, TrendingUp, PiggyBank, Zap, CheckCircle2, Lock, Eye, Smartphone, BarChart3, Users, Mail } from 'lucide-react';
+import { ArrowRight, Shield, PiggyBank, Zap, CheckCircle2, Lock, Eye, Smartphone, BarChart3, Users, Mail } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
 import {
@@ -12,7 +12,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-const rupeeSetuLogo = '/Rupee-setu-logo.png';
+const rupeeSetuLogo = '/Paytrax-logo.jpeg';
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -55,9 +55,9 @@ const Landing = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 hover:opacity-80 transition-opacity cursor-pointer" onClick={() => navigate('/')}>
             <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 bg-white shadow-md">
-              <img src={rupeeSetuLogo} alt="Rupee-Setu" className="w-full h-full object-cover" />
+              <img src={rupeeSetuLogo} alt="Paytrax" className="w-full h-full object-cover" />
             </div>
-            <span className="font-display font-bold text-lg sm:text-xl truncate">Rupee-Setu</span>
+            <span className="font-display font-bold text-lg sm:text-xl truncate">Paytrax</span>
           </div>
           <Button onClick={() => navigate('/auth')} variant="outline" className="text-xs sm:text-sm px-4 hover:bg-primary hover:text-primary-foreground transition-colors duration-300">
             Sign In
@@ -84,22 +84,6 @@ const Landing = () => {
               Built for <span className="font-semibold text-foreground">students & young professionals</span> who want simple expense tracking without linking bank accounts or sharing financial data.
             </p>
             
-            {/* Key differentiators */}
-            <div className="flex flex-col gap-3 pt-2">
-              <div className="flex items-center gap-2 justify-center lg:justify-start">
-                <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-base">Start tracking in 30 seconds — no setup needed</span>
-              </div>
-              <div className="flex items-center gap-2 justify-center lg:justify-start">
-                <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-base">Zero ads, zero tracking, zero data selling</span>
-              </div>
-              <div className="flex items-center gap-2 justify-center lg:justify-start">
-                <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
-                <span className="text-base">Free forever — built by students, for students</span>
-              </div>
-            </div>
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
               <Button 
                 size="lg" 
@@ -125,83 +109,19 @@ const Landing = () => {
             </p>
           </div>
           
-          <div className="flex-1 flex justify-center w-full relative min-h-[500px] lg:min-h-[600px]">
-            <div className="relative w-full max-w-3xl h-full">
-              {/* Main background glow */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-income/15 to-expense/15 rounded-3xl blur-3xl opacity-60 animate-pulse" />
+          <div className="flex-1 flex justify-center items-center w-full relative">
+            <div className="relative w-full max-w-5xl">
+              {/* Subtle background glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-income/5 rounded-3xl blur-3xl opacity-40" />
               
-              {/* Floating Feature Badges - Top */}
-              <div className="absolute -top-4 left-0 lg:left-8 z-20 animate-float">
-                <div className="bg-card/95 backdrop-blur-sm border border-primary/20 rounded-2xl p-4 shadow-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-income/10 rounded-xl flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5 text-income" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Total Saved</p>
-                      <p className="text-lg font-bold text-income">₹15,280</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Feature Badge - Top Right */}
-              <div className="absolute -top-2 right-0 lg:right-12 z-20 animate-float" style={{animationDelay: '1s'}}>
-                <div className="bg-card/95 backdrop-blur-sm border border-expense/20 rounded-2xl p-3 shadow-xl">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Users className="w-4 h-4 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Active Users</p>
-                      <p className="text-base font-bold">500+</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Main Hero Image Container */}
-              <div className="relative pt-12 pb-8 px-4">
+              {/* Main Hero Image Container - Larger and centered */}
+              <div className="relative py-4 sm:py-6 px-2 sm:px-4">
                 <img 
                   src="/landing-image.png" 
-                  alt="Rupee-Setu Expense Tracker Interface" 
-                  className="relative w-full h-auto object-contain drop-shadow-2xl rounded-2xl animate-float z-10"
-                  style={{animationDelay: '0.5s'}}
+                  alt="Paytrax Expense Tracker Interface" 
+                  className="relative w-full h-auto object-contain drop-shadow-2xl rounded-2xl transition-transform duration-500 hover:scale-[1.02] z-10"
                 />
               </div>
-
-              {/* Floating Info Badge - Bottom Left */}
-              <div className="absolute bottom-4 left-0 lg:left-6 z-20 animate-float" style={{animationDelay: '2s'}}>
-                <div className="bg-card/95 backdrop-blur-sm border border-primary/20 rounded-2xl p-4 shadow-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                      <CheckCircle2 className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold">Easy Setup</p>
-                      <p className="text-xs text-muted-foreground">30 sec signup</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Security Badge - Bottom Right */}
-              <div className="absolute bottom-8 right-0 lg:right-8 z-20 animate-float" style={{animationDelay: '1.5s'}}>
-                <div className="bg-card/95 backdrop-blur-sm border border-income/20 rounded-2xl p-3 shadow-xl">
-                  <div className="flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-income" />
-                    <div>
-                      <p className="text-sm font-semibold">100% Secure</p>
-                      <p className="text-xs text-muted-foreground">Bank-level encryption</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Decorative circles */}
-              <div className="absolute top-1/4 -left-8 w-20 h-20 bg-primary/10 rounded-full blur-2xl animate-pulse" />
-              <div className="absolute bottom-1/3 -right-8 w-24 h-24 bg-income/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1s'}} />
-              <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-expense/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}} />
             </div>
           </div>
         </main>
@@ -225,7 +145,7 @@ const Landing = () => {
         <section id="features" className="py-8 sm:py-12">
           <div className="text-center mb-10 space-y-3">
             <Badge className="inline-flex px-4 py-1.5 bg-secondary text-secondary-foreground border-0">
-              Why Rupee-Setu?
+              Why Paytrax?
             </Badge>
             <h2 className="font-display text-3xl sm:text-4xl font-bold">
               Simple Tracking, Powerful Insights
@@ -375,7 +295,7 @@ const Landing = () => {
             </div>
             
             <p className="text-center text-sm text-muted-foreground mt-6 max-w-2xl mx-auto">
-              Rupee-Setu is open, transparent, and student-focused. We don't require bank access because we respect your privacy. Manual tracking = full control.
+              Paytrax is open, transparent, and student-focused. We don't require bank access because we respect your privacy. Manual tracking = full control.
             </p>
           </div>
         </section>
@@ -398,7 +318,7 @@ const Landing = () => {
             <Accordion type="single" collapsible className="space-y-4">
               <AccordionItem value="item-1" className="bg-card border rounded-xl px-6 shadow-sm">
                 <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  Is Rupee-Setu really free forever?
+                  Is Paytrax really free forever?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
                   Yes, completely free. No hidden charges, no premium tiers, no paid features. We built this for students like us, and we believe financial tracking should be accessible to everyone.
@@ -410,7 +330,7 @@ const Landing = () => {
                   Why should I trust a student-built product?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  Because we use it ourselves every day. We built Rupee-Setu to solve our own problem — losing track of pocket money. No corporate agenda means no pressure to monetize your data or add unnecessary features.
+                  Because we use it ourselves every day. We built Paytrax to solve our own problem — losing track of pocket money. No corporate agenda means no pressure to monetize your data or add unnecessary features.
                 </AccordionContent>
               </AccordionItem>
 
@@ -428,7 +348,7 @@ const Landing = () => {
                   Do I need to connect my bank account?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  No! Rupee-Setu is a manual tracker. You log transactions yourself, which gives you complete control and privacy. No bank passwords, no automated syncing, no financial institution access required.
+                  No! Paytrax is a manual tracker. You log transactions yourself, which gives you complete control and privacy. No bank passwords, no automated syncing, no financial institution access required.
                 </AccordionContent>
               </AccordionItem>
 
@@ -437,7 +357,7 @@ const Landing = () => {
                   Can I use it on mobile?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  Yes! Rupee-Setu is a Progressive Web App (PWA) that works beautifully on mobile. You can install it like a native app on your phone for quick access anytime.</AccordionContent>
+                  Yes! Paytrax is a Progressive Web App (PWA) that works beautifully on mobile. You can install it like a native app on your phone for quick access anytime.</AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="item-6" className="bg-card border rounded-xl px-6 shadow-sm">
@@ -451,10 +371,10 @@ const Landing = () => {
 
               <AccordionItem value="item-7" className="bg-card border rounded-xl px-6 shadow-sm">
                 <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                  Who should NOT use Rupee-Setu?
+                  Who should NOT use Paytrax?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
-                  If you need automatic bank syncing, advanced investment tracking, or tax preparation features, Rupee-Setu might not be for you. We focus on simple, manual expense tracking — perfect for students and young professionals who want clarity without complexity.
+                  If you need automatic bank syncing, advanced investment tracking, or tax preparation features, Paytrax might not be for you. We focus on simple, manual expense tracking — perfect for students and young professionals who want clarity without complexity.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -462,44 +382,44 @@ const Landing = () => {
         </section>
 
         {/* CTA */}
-        <section className="py-8 sm:py-12 mb-8">
-          <div className="relative overflow-hidden bg-gradient-to-r from-primary to-emerald-600 rounded-3xl p-8 sm:p-12 lg:p-14 text-center text-white shadow-2xl">
+        <section className="py-6 sm:py-8 mb-6 sm:mb-8">
+          <div className="relative overflow-hidden bg-gradient-to-br from-primary to-emerald-600 rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 text-center text-white shadow-2xl">
             <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay" />
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+            <div className="absolute -top-16 -right-16 sm:-top-24 sm:-right-24 w-40 h-40 sm:w-64 sm:h-64 bg-white/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-16 -left-16 sm:-bottom-24 sm:-left-24 w-40 h-40 sm:w-64 sm:h-64 bg-white/10 rounded-full blur-3xl" />
             
-            <div className="relative z-10 space-y-6 max-w-3xl mx-auto">
-              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold">
+            <div className="relative z-10 space-y-4 sm:space-y-6 max-w-3xl mx-auto">
+              <h2 className="font-display text-2xl sm:text-4xl md:text-5xl font-bold leading-tight">
                 Start Tracking Your Money Today
               </h2>
-              <p className="text-primary-foreground/90 text-lg sm:text-xl max-w-2xl mx-auto">
+              <p className="text-white/90 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
                 Join hundreds of students who've taken control of their finances. Simple, private, and completely free.
               </p>
               
               {/* Trust signals */}
-              <div className="flex flex-wrap justify-center gap-6 pt-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Free Forever</span>
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 pt-2 text-sm sm:text-base">
+                <div className="flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="font-medium">Free Forever</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>No Credit Card</span>
+                <div className="flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="font-medium">No Credit Card</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>No Bank Connection</span>
+                <div className="flex items-center justify-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span className="font-medium">No Bank Connection</span>
                 </div>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-2 sm:pt-4">
                 <Button 
                   size="lg" 
                   onClick={() => navigate('/auth')}
                   variant="secondary"
-                  className="gap-2 text-lg h-14 px-10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 font-semibold text-primary"
+                  className="w-full sm:w-auto gap-2 text-base sm:text-lg h-12 sm:h-14 px-6 sm:px-10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 font-semibold text-primary"
                 >
-                  Get Started in 30 Seconds <ArrowRight className="w-5 h-5" />
+                  Get Started in 30 Seconds <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </div>
             </div>
@@ -515,9 +435,9 @@ const Landing = () => {
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 bg-white shadow-md">
-                    <img src={rupeeSetuLogo} alt="Rupee-Setu" className="w-full h-full object-cover" />
+                    <img src={rupeeSetuLogo} alt="Paytrax" className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-display font-bold text-lg">Rupee-Setu</span>
+                  <span className="font-display font-bold text-lg">Paytrax</span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   Simple expense tracking for students & young professionals. Built by students, for students.
@@ -567,7 +487,7 @@ const Landing = () => {
                 <h3 className="font-semibold text-sm">Support</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li>
-                    <a href="mailto:support@rupee-setu.app" className="hover:text-foreground transition-colors flex items-center gap-2">
+                    <a href="mailto:support@paytrax.app" className="hover:text-foreground transition-colors flex items-center gap-2">
                       <Mail className="w-4 h-4" />
                       Contact Us
                     </a>
@@ -586,7 +506,7 @@ const Landing = () => {
 
             {/* Bottom Bar */}
             <div className="pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-              <p>© 2026 Rupee-Setu. Built with ❤️ for students everywhere.</p>
+              <p>© 2026 Paytrax. Built with ❤️ for students everywhere.</p>
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4" />
                 <span>Your data is private and secure</span>

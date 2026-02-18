@@ -9,7 +9,7 @@ import { ArrowRight, Loader2, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { z } from 'zod';
 import { toast } from '@/hooks/use-toast';
 
-const rupeeSetuLogo = '/Rupee-setu-logo.png';
+const rupeeSetuLogo = '/Paytrax-logo.jpeg';
 
 const authSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -181,7 +181,7 @@ const Auth = () => {
       <Card className="w-full max-w-md animate-scale-in card-shadow relative">
         <CardHeader className="text-center space-y-3 sm:space-y-4 px-4 sm:px-6">
           <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden flex items-center justify-center bg-white shadow-md">
-            <img src={rupeeSetuLogo} alt="Rupee-Setu" className="w-full h-full object-cover" />
+            <img src={rupeeSetuLogo} alt="Paytrax" className="w-full h-full object-cover" />
           </div>
           <div>
             <CardTitle className="text-xl sm:text-2xl font-display">

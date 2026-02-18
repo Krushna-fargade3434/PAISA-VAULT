@@ -38,13 +38,13 @@ const ExpenseBreakdownChart = () => {
   }
 
   return (
-    <Card className="card-shadow">
+    <Card className="card-shadow border-2 hover:border-primary/20 transition-all duration-300 bg-gradient-to-br from-background via-primary/5 to-background">
       <CardHeader>
         <CardTitle className="font-display text-base sm:text-lg flex items-center gap-2">
-          <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 flex-shrink-0">
+          <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 flex-shrink-0 hover:bg-primary/20 transition-colors">
             <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
           </div>
-          Expense Breakdown
+          <span className="bg-gradient-to-r from-primary to-violet-600 bg-clip-text text-transparent">Expense Breakdown</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="pb-6">
@@ -80,13 +80,13 @@ const ExpenseBreakdownChart = () => {
         
         <div className="mt-4 space-y-2">
           {chartData.map((item) => (
-            <div key={item.name} className="flex items-center justify-between text-sm">
+            <div key={item.name} className="flex items-center justify-between text-sm p-2 rounded-lg hover:bg-muted/50 transition-colors">
               <div className="flex items-center gap-2">
                 <div
-                  className="w-3 h-3 rounded-full"
+                  className="w-3 h-3 rounded-full shadow-md"
                   style={{ backgroundColor: CATEGORY_COLORS[item.name as ExpenseCategory] }}
                 />
-                <span className="text-muted-foreground">{item.name}</span>
+                <span className="text-muted-foreground font-medium">{item.name}</span>
               </div>
               <span className="font-semibold">₹{item.value.toFixed(2)}</span>
             </div>

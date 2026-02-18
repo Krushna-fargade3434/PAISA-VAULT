@@ -44,7 +44,7 @@ interface LendBorrowEntry {
   settledDate?: string;
 }
 
-const STORAGE_KEY = 'rupee-setu-lend-borrow';
+const STORAGE_KEY = 'paytrax-lend-borrow';
 
 // Helper function to get entries from localStorage
 const getStoredEntries = (userId: string): LendBorrowEntry[] => {
@@ -261,12 +261,14 @@ const LendBorrowNotebook = () => {
   }, [entries]);
 
   return (
-    <Card className="border-border/50">
+    <Card className="border-2 border-border/50 hover:border-primary/20 transition-all duration-300 card-shadow bg-gradient-to-br from-background to-primary/5">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base sm:text-lg font-display">
-            <BookOpen className="w-5 h-5 text-primary" />
-            Lend & Borrow Notebook
+            <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors">
+              <BookOpen className="w-5 h-5 text-primary" />
+            </div>
+            <span className="bg-gradient-to-r from-primary to-violet-600 bg-clip-text text-transparent">Lend & Borrow Notebook</span>
           </CardTitle>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
@@ -275,23 +277,23 @@ const LendBorrowNotebook = () => {
                 <span className="hidden sm:inline">Add Entry</span>
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md border-2 border-primary/20 bg-gradient-to-b from-background to-primary/5">
               <DialogHeader>
-                <DialogTitle className="font-display">Add Entry</DialogTitle>
+                <DialogTitle className="font-display text-xl bg-gradient-to-r from-primary to-violet-600 bg-clip-text text-transparent">Add Entry</DialogTitle>
                 <DialogDescription>
                   Record money you lent to someone or borrowed from someone.
                 </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleAddEntry} className="space-y-4 mt-4">
                 <div className="space-y-2">
-                  <Label>Type</Label>
+                  <Label className="font-medium">Type</Label>
                   <Select
                     value={form.type}
                     onValueChange={(value: 'lend' | 'borrow') =>
                       setForm({ ...form, type: value })
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="border-2 focus:border-primary/50 transition-all">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -311,17 +313,18 @@ const LendBorrowNotebook = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="person-name">Person Name</Label>
+                  <Label htmlFor="person-name" className="font-medium">Person Name</Label>
                   <Input
                     id="person-name"
                     placeholder="Who did you lend/borrow from?"
                     value={form.personName}
                     onChange={(e) => setForm({ ...form, personName: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="entry-amount">Amount (₹)</Label>
+                  <Label htmlFor="entry-amount" className="font-medium">Amount (₹)</Label>
                   <Input
                     id="entry-amount"
                     type="number"
@@ -330,31 +333,34 @@ const LendBorrowNotebook = () => {
                     min="0"
                     value={form.amount}
                     onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="entry-date">Date</Label>
+                  <Label htmlFor="entry-date" className="font-medium">Date</Label>
                   <Input
                     id="entry-date"
                     type="date"
                     value={form.date}
                     onChange={(e) => setForm({ ...form, date: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="entry-note">Note (optional)</Label>
+                  <Label htmlFor="entry-note" className="font-medium">Note (optional)</Label>
                   <Textarea
                     id="entry-note"
                     placeholder="What was it for?"
                     value={form.note}
                     onChange={(e) => setForm({ ...form, note: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all resize-none"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className={`w-full ${
+                  className={`w-full hover:scale-105 transition-all shadow-lg ${
                     form.type === 'lend'
                       ? 'bg-orange-500 hover:bg-orange-600'
                       : 'bg-blue-500 hover:bg-blue-600'
@@ -367,21 +373,21 @@ const LendBorrowNotebook = () => {
           </Dialog>
           {/* Edit Dialog */}
           <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md border-2 border-primary/20 bg-gradient-to-b from-background to-primary/5">
               <DialogHeader>
-                <DialogTitle className="font-display">Edit Entry</DialogTitle>
+                <DialogTitle className="font-display text-xl bg-gradient-to-r from-primary to-violet-600 bg-clip-text text-transparent">Edit Entry</DialogTitle>
                 <DialogDescription>Update details for this entry.</DialogDescription>
               </DialogHeader>
               <form onSubmit={handleUpdateEntry} className="space-y-4 mt-4">
                 <div className="space-y-2">
-                  <Label>Type</Label>
+                  <Label className="font-medium">Type</Label>
                   <Select
                     value={editForm.type}
                     onValueChange={(value: 'lend' | 'borrow') =>
                       setEditForm({ ...editForm, type: value })
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="border-2 focus:border-primary/50 transition-all">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -401,17 +407,18 @@ const LendBorrowNotebook = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-person-name">Person Name</Label>
+                  <Label htmlFor="edit-person-name" className="font-medium">Person Name</Label>
                   <Input
                     id="edit-person-name"
                     placeholder="Who did you lend/borrow from?"
                     value={editForm.personName}
                     onChange={(e) => setEditForm({ ...editForm, personName: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-entry-amount">Amount (₹)</Label>
+                  <Label htmlFor="edit-entry-amount" className="font-medium">Amount (₹)</Label>
                   <Input
                     id="edit-entry-amount"
                     type="number"
@@ -420,31 +427,34 @@ const LendBorrowNotebook = () => {
                     min="0"
                     value={editForm.amount}
                     onChange={(e) => setEditForm({ ...editForm, amount: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-entry-date">Date</Label>
+                  <Label htmlFor="edit-entry-date" className="font-medium">Date</Label>
                   <Input
                     id="edit-entry-date"
                     type="date"
                     value={editForm.date}
                     onChange={(e) => setEditForm({ ...editForm, date: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="edit-entry-note">Note (optional)</Label>
+                  <Label htmlFor="edit-entry-note" className="font-medium">Note (optional)</Label>
                   <Textarea
                     id="edit-entry-note"
                     placeholder="What was it for?"
                     value={editForm.note}
                     onChange={(e) => setEditForm({ ...editForm, note: e.target.value })}
+                    className="border-2 focus:border-primary/50 transition-all resize-none"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className={`w-full ${
+                  className={`w-full hover:scale-105 transition-all shadow-lg ${
                     editForm.type === 'lend'
                       ? 'bg-orange-500 hover:bg-orange-600'
                       : 'bg-blue-500 hover:bg-blue-600'

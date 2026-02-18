@@ -98,16 +98,16 @@ const QuickActions = () => {
             <span className="block xs:inline font-semibold">Add Income</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md border-2 border-income/20 bg-gradient-to-b from-background to-income/5">
           <DialogHeader>
-            <DialogTitle className="font-display">Add Income</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="font-display text-xl bg-gradient-to-r from-income to-emerald-600 bg-clip-text text-transparent">Add Income</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
               Record money received from parents or other sources.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleAddIncome} className="space-y-4 mt-4">
             <div className="space-y-2">
-              <Label htmlFor="income-amount">Amount (₹)</Label>
+              <Label htmlFor="income-amount" className="font-medium">Amount (₹)</Label>
               <Input
                 id="income-amount"
                 type="number"
@@ -116,16 +116,17 @@ const QuickActions = () => {
                 min="0"
                 value={incomeForm.amount}
                 onChange={(e) => setIncomeForm({ ...incomeForm, amount: e.target.value })}
+                className="border-2 focus:border-income/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="income-source">Source</Label>
+              <Label htmlFor="income-source" className="font-medium">Source</Label>
               <Select
                 value={incomeForm.source}
                 onValueChange={(value) => setIncomeForm({ ...incomeForm, source: value })}
               >
-                <SelectTrigger>
+                <SelectTrigger className="border-2 focus:border-income/50 transition-all">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -137,27 +138,29 @@ const QuickActions = () => {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="income-date">Date</Label>
+              <Label htmlFor="income-date" className="font-medium">Date</Label>
               <Input
                 id="income-date"
                 type="date"
                 value={incomeForm.date}
                 onChange={(e) => setIncomeForm({ ...incomeForm, date: e.target.value })}
+                className="border-2 focus:border-income/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="income-description">Note (optional)</Label>
+              <Label htmlFor="income-description" className="font-medium">Note (optional)</Label>
               <Textarea
                 id="income-description"
                 placeholder="Add a note..."
                 value={incomeForm.description}
                 onChange={(e) => setIncomeForm({ ...incomeForm, description: e.target.value })}
+                className="border-2 focus:border-income/50 transition-all resize-none"
               />
             </div>
             <Button 
               type="submit" 
-              className="w-full gradient-income hover:opacity-90" 
+              className="w-full gradient-income hover:opacity-90 hover:scale-105 transition-all shadow-lg" 
               disabled={isAddingIncome}
             >
               {isAddingIncome ? 'Adding...' : 'Add Income'}
@@ -173,16 +176,16 @@ const QuickActions = () => {
             <span className="block xs:inline font-semibold">Add Expense</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md border-2 border-expense/20 bg-gradient-to-b from-background to-expense/5">
           <DialogHeader>
-            <DialogTitle className="font-display">Add Expense</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="font-display text-xl bg-gradient-to-r from-expense to-rose-600 bg-clip-text text-transparent">Add Expense</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
               Record your daily expense.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleAddExpense} className="space-y-4 mt-4">
             <div className="space-y-2">
-              <Label htmlFor="expense-amount">Amount (₹)</Label>
+              <Label htmlFor="expense-amount" className="font-medium">Amount (₹)</Label>
               <Input
                 id="expense-amount"
                 type="number"
@@ -191,31 +194,34 @@ const QuickActions = () => {
                 min="0"
                 value={expenseForm.amount}
                 onChange={(e) => setExpenseForm({ ...expenseForm, amount: e.target.value })}
+                className="border-2 focus:border-expense/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="expense-date">Date</Label>
+              <Label htmlFor="expense-date" className="font-medium">Date</Label>
               <Input
                 id="expense-date"
                 type="date"
                 value={expenseForm.date}
                 onChange={(e) => setExpenseForm({ ...expenseForm, date: e.target.value })}
+                className="border-2 focus:border-expense/50 transition-all"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="expense-description">Description (optional)</Label>
+              <Label htmlFor="expense-description" className="font-medium">Description (optional)</Label>
               <Textarea
                 id="expense-description"
                 placeholder="What did you spend on?"
                 value={expenseForm.description}
                 onChange={(e) => setExpenseForm({ ...expenseForm, description: e.target.value })}
+                className="border-2 focus:border-expense/50 transition-all resize-none"
               />
             </div>
             <Button 
               type="submit" 
-              className="w-full gradient-expense hover:opacity-90" 
+              className="w-full gradient-expense hover:opacity-90 hover:scale-105 transition-all shadow-lg" 
               disabled={isAddingExpense}
             >
               {isAddingExpense ? 'Adding...' : 'Add Expense'}
